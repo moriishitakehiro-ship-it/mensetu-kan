@@ -10,20 +10,21 @@
     }
 
     :root {
-      --bg1: #eef4ff;
+      --bg1: #edf4ff;
       --bg2: #f8fbff;
-      --card: rgba(255, 255, 255, 0.88);
-      --line: rgba(255, 255, 255, 0.55);
+      --card: rgba(255, 255, 255, 0.9);
+      --line: rgba(218, 229, 255, 0.95);
       --text: #1f2a44;
       --sub: #667085;
       --blue: #2f5bd3;
-      --blue2: #5b8cff;
+      --blue2: #6ea0ff;
       --green: #16a34a;
+      --green2: #22c55e;
       --red: #dc2626;
-      --gray: #e7ecf5;
-      --shadow: 0 20px 50px rgba(34, 59, 117, 0.12);
-      --radius-xl: 24px;
-      --radius-lg: 18px;
+      --red2: #ef4444;
+      --shadow: 0 20px 50px rgba(50, 80, 150, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
       --radius-md: 14px;
     }
 
@@ -33,49 +34,49 @@
       font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, #dfeaff 0%, transparent 35%),
-        radial-gradient(circle at top right, #e8f0ff 0%, transparent 30%),
+        radial-gradient(circle at top left, #dceaff 0%, transparent 32%),
+        radial-gradient(circle at top right, #ebf2ff 0%, transparent 26%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
     .wrapper {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 32px 20px 56px;
+      padding: 28px 18px 48px;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      border-radius: 30px;
+      border-radius: 32px;
       padding: 30px 28px;
-      background: linear-gradient(135deg, #2f5bd3 0%, #5b8cff 100%);
+      background: linear-gradient(135deg, #2f5bd3 0%, #6ea0ff 100%);
       color: #fff;
       box-shadow: var(--shadow);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
-    .hero::after {
+    .hero::before {
       content: "";
       position: absolute;
-      right: -60px;
-      top: -60px;
+      right: -30px;
+      top: -40px;
       width: 220px;
       height: 220px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.12);
     }
 
-    .hero::before {
+    .hero::after {
       content: "";
       position: absolute;
-      right: 90px;
-      bottom: -50px;
-      width: 160px;
-      height: 160px;
+      right: 110px;
+      bottom: -60px;
+      width: 170px;
+      height: 170px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .hero-inner {
@@ -83,16 +84,16 @@
       z-index: 1;
     }
 
-    .hero-badge {
+    .hero-kicker {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.15);
       font-size: 13px;
+      font-weight: 700;
       margin-bottom: 14px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     h1 {
@@ -104,25 +105,25 @@
 
     .hero-text {
       margin: 0;
-      max-width: 720px;
-      line-height: 1.8;
+      max-width: 760px;
+      line-height: 1.9;
       font-size: 15px;
-      color: rgba(255, 255, 255, 0.92);
+      color: rgba(255, 255, 255, 0.94);
     }
 
-    .main-grid {
+    .layout {
       display: grid;
-      grid-template-columns: 1.8fr 0.95fr;
-      gap: 20px;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 22px;
       align-items: start;
     }
 
     .panel {
       background: var(--card);
       border: 1px solid var(--line);
-      backdrop-filter: blur(12px);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
     }
 
     .panel-body {
@@ -132,14 +133,50 @@
     .section-title {
       margin: 0 0 14px;
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text);
     }
 
     .sub-text {
+      margin: 0;
       color: var(--sub);
       font-size: 14px;
       line-height: 1.8;
+    }
+
+    .progress-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #f7faff 0%, #f2f7ff 100%);
+      border: 1px solid #e3ebff;
+      margin-bottom: 18px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #dfe8fb;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--blue2));
+      transition: width 0.35s ease;
     }
 
     .meta-row {
@@ -159,63 +196,28 @@
       padding: 8px 12px;
       border-radius: 999px;
       font-size: 13px;
-      font-weight: 600;
-    }
-
-    .progress-card {
-      margin-bottom: 18px;
-      padding: 16px 18px;
-      background: linear-gradient(180deg, #f7faff 0%, #f2f6ff 100%);
-      border: 1px solid #e3ebff;
-      border-radius: 18px;
-    }
-
-    .progress-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      gap: 12px;
-      font-size: 14px;
-      color: var(--sub);
-      font-weight: 600;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      border-radius: 999px;
-      background: #dfe7fb;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--blue), var(--blue2));
-      transition: width 0.35s ease;
+      font-weight: 700;
     }
 
     .question-box,
     .answer-box,
-    .result-box,
+    .judge-box,
     .summary-box,
-    .tips-box {
+    .tips-box,
+    .score-box {
       border-radius: var(--radius-lg);
-      padding: 20px;
     }
 
     .question-box {
-      background: #ffffff;
+      background: #fff;
       border: 1px solid #ebf0f7;
+      padding: 20px;
       margin-bottom: 16px;
     }
 
-    .question-label,
-    .answer-label {
+    .box-label {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.08em;
       color: var(--blue);
       margin-bottom: 10px;
@@ -224,16 +226,17 @@
     .question-text {
       font-size: 22px;
       line-height: 1.7;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text);
     }
 
     .answer-box {
-      background: linear-gradient(180deg, #fbfcff 0%, #f7f9ff 100%);
-      border: 1px solid #e7ecfb;
-      margin-bottom: 18px;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(180deg, #fbfcff 0%, #f7f9ff 100%);
+      border: 1px solid #e7ecfb;
+      padding: 20px 20px 20px 24px;
+      margin-bottom: 18px;
     }
 
     .answer-box::before {
@@ -251,26 +254,24 @@
       line-height: 2;
       font-size: 15px;
       color: #2f3a54;
-      padding-left: 8px;
     }
 
-    .judge-area {
-      background: #ffffff;
+    .judge-box {
+      background: #fff;
       border: 1px solid #ebf0f7;
-      border-radius: var(--radius-lg);
       padding: 20px;
     }
 
     .judge-title {
       margin: 0 0 8px;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .judge-sub {
       margin: 0 0 16px;
-      font-size: 13px;
       color: var(--sub);
+      font-size: 13px;
       line-height: 1.8;
     }
 
@@ -285,7 +286,7 @@
       border-radius: 16px;
       padding: 14px 18px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     }
@@ -304,35 +305,38 @@
       margin-top: 20px;
       background: #fff;
       color: var(--blue);
-      box-shadow: 0 10px 24px rgba(14, 43, 120, 0.18);
+      box-shadow: 0 12px 24px rgba(10, 40, 120, 0.18);
     }
 
     .btn-pass {
-      background: linear-gradient(180deg, #22c55e, #16a34a);
       color: #fff;
-      box-shadow: 0 10px 20px rgba(22, 163, 74, 0.22);
+      background: linear-gradient(180deg, var(--green2), var(--green));
+      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.22);
     }
 
     .btn-fail {
-      background: linear-gradient(180deg, #ef4444, #dc2626);
       color: #fff;
-      box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+      background: linear-gradient(180deg, var(--red2), var(--red));
+      box-shadow: 0 10px 22px rgba(220, 38, 38, 0.22);
     }
 
     .btn-next,
     .btn-restart {
       background: #eef2f8;
-      color: #24324a;
-    }
-
-    .hidden {
-      display: none !important;
+      color: #22314a;
     }
 
     .result-box {
+      display: none;
       margin-top: 16px;
-      border: 1px solid transparent;
+      padding: 18px;
+      border-radius: 18px;
       line-height: 1.9;
+      border: 1px solid transparent;
+    }
+
+    .result-box.show {
+      display: block;
     }
 
     .result-correct {
@@ -342,54 +346,65 @@
 
     .result-incorrect {
       background: #fff3f3;
-      border-color: #f4c3c3;
+      border-color: #f3c5c5;
     }
 
     .result-title {
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 10px;
     }
 
     .result-strong {
-      font-weight: 800;
+      font-weight: 900;
+    }
+
+    .hidden {
+      display: none !important;
     }
 
     .side-stack {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
     }
 
-    .mini-stat-grid {
+    .score-box {
+      padding: 22px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid #e6eefb;
+    }
+
+    .mini-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-top: 8px;
+      margin-top: 14px;
     }
 
-    .mini-stat {
-      background: #f8fbff;
-      border: 1px solid #e6eefb;
+    .mini-card {
       border-radius: 18px;
       padding: 16px;
+      background: #f8fbff;
+      border: 1px solid #e6eefb;
     }
 
-    .mini-stat-label {
+    .mini-label {
       color: var(--sub);
       font-size: 12px;
       margin-bottom: 6px;
     }
 
-    .mini-stat-value {
-      font-size: 26px;
-      font-weight: 800;
+    .mini-value {
+      font-size: 28px;
+      font-weight: 900;
       color: var(--text);
     }
 
     .tips-box {
-      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-      border: 1px solid #ebf0f7;
+      padding: 22px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      border: 1px solid #e6eefb;
     }
 
     .tips-list {
@@ -401,15 +416,16 @@
     }
 
     .summary-box {
+      padding: 22px;
       background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
       border: 1px solid #e6eefb;
     }
 
     .summary-score {
       font-size: 30px;
-      font-weight: 800;
-      margin: 8px 0 14px;
+      font-weight: 900;
       color: var(--blue);
+      margin: 8px 0 14px;
     }
 
     .summary-message {
@@ -418,8 +434,8 @@
       line-height: 1.9;
     }
 
-    @media (max-width: 900px) {
-      .main-grid {
+    @media (max-width: 920px) {
+      .layout {
         grid-template-columns: 1fr;
       }
 
@@ -432,16 +448,19 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .wrapper {
-        padding: 20px 14px 40px;
+        padding: 18px 12px 36px;
       }
 
       .hero {
         padding: 24px 20px;
       }
 
-      .panel-body {
+      .panel-body,
+      .score-box,
+      .tips-box,
+      .summary-box {
         padding: 18px;
       }
 
@@ -449,7 +468,7 @@
         width: 100%;
       }
 
-      .mini-stat-grid {
+      .mini-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -459,23 +478,23 @@
   <div class="wrapper">
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-badge">APIキー不要　HTML単体で動作</div>
+        <div class="hero-kicker">採用判断のクセを鍛えるトレーニング</div>
         <h1>面接官トレーニングゲーム</h1>
         <p class="hero-text">
           候補者の回答を読み、「採用！」か「不採用」を判断するトレーニングゲームです。
-          判定後には、正しい見立てと解説が表示されます。採用判断のクセを、遊びながら鍛えられます。
+          全６問で、具体性・再現性・自己認識・組織適応力などを見極める練習ができます。
         </p>
         <button class="btn-start" id="startBtn">ゲーム開始</button>
       </div>
     </section>
 
-    <div class="main-grid">
+    <div class="layout">
       <main class="panel">
         <div class="panel-body">
           <div class="progress-card">
             <div class="progress-top">
-              <span id="progressText">準備中</span>
-              <span id="progressCount">0 / 0</span>
+              <span id="progressText">ゲーム開始でスタート</span>
+              <span id="progressCount">0 / 6</span>
             </div>
             <div class="progress-bar">
               <div class="progress-fill" id="progressFill"></div>
@@ -489,19 +508,19 @@
 
           <section id="gameCard" class="hidden">
             <div class="question-box">
-              <div class="question-label">QUESTION</div>
+              <div class="box-label">QUESTION</div>
               <div class="question-text" id="questionText"></div>
             </div>
 
             <div class="answer-box">
-              <div class="answer-label">候補者の回答</div>
+              <div class="box-label">候補者の回答</div>
               <div class="answer-text" id="answerText"></div>
             </div>
 
-            <div class="judge-area">
+            <div class="judge-box">
               <h2 class="judge-title">あなたの判定</h2>
               <p class="judge-sub">
-                回答の熱量だけでなく、具体性・再現性・自己認識・組織適応力も見ながら判断してください。
+                熱意だけでなく、具体性・再現性・自己認識・組織で働く姿勢まで見ながら判断してください。
               </p>
 
               <div class="button-row">
@@ -510,7 +529,7 @@
                 <button class="btn-next hidden" id="nextBtn">次の問題へ</button>
               </div>
 
-              <div class="result-box hidden" id="resultBox"></div>
+              <div class="result-box" id="resultBox"></div>
             </div>
           </section>
 
@@ -527,27 +546,25 @@
 
       <aside class="side-stack">
         <section class="panel">
-          <div class="panel-body">
+          <div class="score-box">
             <h2 class="section-title">現在の状況</h2>
-            <p class="sub-text">
-              問題を解きながら、判定精度を確認できます。
-            </p>
+            <p class="sub-text">問題を解きながら、判定精度を確認できます。</p>
 
-            <div class="mini-stat-grid">
-              <div class="mini-stat">
-                <div class="mini-stat-label">現在のスコア</div>
-                <div class="mini-stat-value" id="liveScore">0</div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <div class="mini-label">現在のスコア</div>
+                <div class="mini-value" id="liveScore">0</div>
               </div>
-              <div class="mini-stat">
-                <div class="mini-stat-label">残り問題数</div>
-                <div class="mini-stat-value" id="remainCount">0</div>
+              <div class="mini-card">
+                <div class="mini-label">残り問題数</div>
+                <div class="mini-value" id="remainCount">6</div>
               </div>
             </div>
           </div>
         </section>
 
         <section class="panel">
-          <div class="panel-body tips-box">
+          <div class="tips-box">
             <h2 class="section-title">見るポイント</h2>
             <ul class="tips-list">
               <li>志望理由が会社理解とつながっているか</li>
@@ -586,7 +603,7 @@
         category: "課題解決",
         difficulty: "標準",
         question: "難しい調整案件をどう乗り越えたか教えてください。",
-        answer: "関係者の要望が食い違っていたので、まず相手ごとの優先順位を整理しました。その上で、全員が絶対に譲れない点と、調整可能な点を切り分けて、3案ほど持って相談しました。結果として納期を守ったまま合意形成できました。",
+        answer: "関係者の要望が食い違っていたので、まず相手ごとの優先順位を整理しました。その上で、全員が絶対に譲れない点と、調整可能な点を切り分けて、３案ほど持って相談しました。結果として納期を守ったまま合意形成できました。",
         correct: "pass",
         explanation: "構造化して状況を捉え、調整プロセスも具体的です。再現性があり、仕事の進め方も見えるので、採用寄りに判断しやすい回答です。",
         insight: "単なる『頑張った』ではなく、整理→提案→合意形成という流れが見えるのが強いです。"
@@ -606,7 +623,7 @@
         question: "最近、自主的に学んだことを教えてください。",
         answer: "特に勉強はしていません。仕事が忙しかったので。ただ、必要になったらその時に覚えればいいと思っています。今のところ大きな問題は起きていません。",
         correct: "fail",
-        explanation: "率直さはありますが、変化対応力や学習意欲が弱く見えます。職種によっては即NGではないものの、基本的には不採用寄り評価が妥当です。",
+        explanation: "率直さはありますが、変化対応力や学習意欲が弱く見えます。職種によっては即ＮＧではないものの、基本的には不採用寄り評価が妥当です。",
         insight: "学習の有無だけでなく、『必要時にどう学ぶか』の姿勢も見ます。"
       },
       {
@@ -685,10 +702,11 @@
       questionText.textContent = q.question;
       answerText.textContent = q.answer;
 
-      resultBox.className = "result-box hidden";
+      resultBox.className = "result-box";
       resultBox.innerHTML = "";
 
       nextBtn.classList.add("hidden");
+      nextBtn.textContent = "次の問題へ";
       passBtn.disabled = false;
       failBtn.disabled = false;
 
@@ -707,7 +725,7 @@
         score++;
       }
 
-      resultBox.className = `result-box ${isCorrect ? "result-correct" : "result-incorrect"}`;
+      resultBox.className = `result-box show ${isCorrect ? "result-correct" : "result-incorrect"}`;
       resultBox.innerHTML = `
         <div class="result-title">${isCorrect ? "正解！" : "不正解"}</div>
         <div><span class="result-strong">正しい判断：</span>${q.correct === "pass" ? "採用！" : "不採用"}</div>
@@ -715,7 +733,6 @@
         <div style="margin-top:8px;"><span class="result-strong">見るポイント：</span>${q.insight}</div>
       `;
 
-      resultBox.classList.remove("hidden");
       nextBtn.classList.remove("hidden");
       passBtn.disabled = true;
       failBtn.disabled = true;
@@ -760,14 +777,12 @@
 
       summaryCard.classList.add("hidden");
       gameCard.classList.remove("hidden");
-      nextBtn.textContent = "次の問題へ";
 
       loadQuestion();
     }
 
     startBtn.addEventListener("click", startGame);
     restartBtn.addEventListener("click", startGame);
-
     passBtn.addEventListener("click", () => judge("pass"));
     failBtn.addEventListener("click", () => judge("fail"));
 
@@ -779,10 +794,6 @@
         showSummary();
       }
     });
-
-    progressText.textContent = "ゲーム開始でスタート";
-    progressCount.textContent = `0 / ${questions.length}`;
-    remainCount.textContent = questions.length;
   </script>
 </body>
 </html>
