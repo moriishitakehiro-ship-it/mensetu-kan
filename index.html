@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>面接官トレーニングゲーム</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg1: #eef4ff;
+      --bg2: #f8fbff;
+      --card: rgba(255, 255, 255, 0.88);
+      --line: rgba(255, 255, 255, 0.55);
+      --text: #1f2a44;
+      --sub: #667085;
+      --blue: #2f5bd3;
+      --blue2: #5b8cff;
+      --green: #16a34a;
+      --red: #dc2626;
+      --gray: #e7ecf5;
+      --shadow: 0 20px 50px rgba(34, 59, 117, 0.12);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #dfeaff 0%, transparent 35%),
+        radial-gradient(circle at top right, #e8f0ff 0%, transparent 30%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 30px 28px;
+      background: linear-gradient(135deg, #2f5bd3 0%, #5b8cff 100%);
+      color: #fff;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: 90px;
+      bottom: -50px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 13px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-text {
+      margin: 0;
+      max-width: 720px;
+      line-height: 1.8;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 0.95fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-body {
+      padding: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .sub-text {
+      color: var(--sub);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff4ff;
+      color: var(--blue);
+      border: 1px solid #dce7ff;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .progress-card {
+      margin-bottom: 18px;
+      padding: 16px 18px;
+      background: linear-gradient(180deg, #f7faff 0%, #f2f6ff 100%);
+      border: 1px solid #e3ebff;
+      border-radius: 18px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--sub);
+      font-weight: 600;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #dfe7fb;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--blue2));
+      transition: width 0.35s ease;
+    }
+
+    .question-box,
+    .answer-box,
+    .result-box,
+    .summary-box,
+    .tips-box {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .question-box {
+      background: #ffffff;
+      border: 1px solid #ebf0f7;
+      margin-bottom: 16px;
+    }
+
+    .question-label,
+    .answer-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      line-height: 1.7;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .answer-box {
+      background: linear-gradient(180deg, #fbfcff 0%, #f7f9ff 100%);
+      border: 1px solid #e7ecfb;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .answer-box::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--blue), var(--blue2));
+    }
+
+    .answer-text {
+      white-space: pre-wrap;
+      line-height: 2;
+      font-size: 15px;
+      color: #2f3a54;
+      padding-left: 8px;
+    }
+
+    .judge-area {
+      background: #ffffff;
+      border: 1px solid #ebf0f7;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .judge-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .judge-sub {
+      margin: 0 0 16px;
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.8;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-start {
+      margin-top: 20px;
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 10px 24px rgba(14, 43, 120, 0.18);
+    }
+
+    .btn-pass {
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(22, 163, 74, 0.22);
+    }
+
+    .btn-fail {
+      background: linear-gradient(180deg, #ef4444, #dc2626);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+    }
+
+    .btn-next,
+    .btn-restart {
+      background: #eef2f8;
+      color: #24324a;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .result-box {
+      margin-top: 16px;
+      border: 1px solid transparent;
+      line-height: 1.9;
+    }
+
+    .result-correct {
+      background: #eefbf3;
+      border-color: #b8e9c8;
+    }
+
+    .result-incorrect {
+      background: #fff3f3;
+      border-color: #f4c3c3;
+    }
+
+    .result-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .result-strong {
+      font-weight: 800;
+    }
+
+    .side-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mini-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .mini-stat {
+      background: #f8fbff;
+      border: 1px solid #e6eefb;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .mini-stat-label {
+      color: var(--sub);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .mini-stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .tips-box {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid #ebf0f7;
+    }
+
+    .tips-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--sub);
+      line-height: 1.9;
+      font-size: 14px;
+    }
+
+    .summary-box {
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      border: 1px solid #e6eefb;
+    }
+
+    .summary-score {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 8px 0 14px;
+      color: var(--blue);
+    }
+
+    .summary-message {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.9;
+    }
+
+    @media (max-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .question-text {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .wrapper {
+        padding: 20px 14px 40px;
+      }
+
+      .hero {
+        padding: 24px 20px;
+      }
+
+      .panel-body {
+        padding: 18px;
+      }
+
+      .button-row button {
+        width: 100%;
+      }
+
+      .mini-stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-badge">APIキー不要　HTML単体で動作</div>
+        <h1>面接官トレーニングゲーム</h1>
+        <p class="hero-text">
+          候補者の回答を読み、「採用！」か「不採用」を判断するトレーニングゲームです。
+          判定後には、正しい見立てと解説が表示されます。採用判断のクセを、遊びながら鍛えられます。
+        </p>
+        <button class="btn-start" id="startBtn">ゲーム開始</button>
+      </div>
+    </section>
+
+    <div class="main-grid">
+      <main class="panel">
+        <div class="panel-body">
+          <div class="progress-card">
+            <div class="progress-top">
+              <span id="progressText">準備中</span>
+              <span id="progressCount">0 / 0</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <span class="chip" id="categoryPill">カテゴリ：-</span>
+            <span class="chip" id="difficultyPill">難易度：-</span>
+          </div>
+
+          <section id="gameCard" class="hidden">
+            <div class="question-box">
+              <div class="question-label">QUESTION</div>
+              <div class="question-text" id="questionText"></div>
+            </div>
+
+            <div class="answer-box">
+              <div class="answer-label">候補者の回答</div>
+              <div class="answer-text" id="answerText"></div>
+            </div>
+
+            <div class="judge-area">
+              <h2 class="judge-title">あなたの判定</h2>
+              <p class="judge-sub">
+                回答の熱量だけでなく、具体性・再現性・自己認識・組織適応力も見ながら判断してください。
+              </p>
+
+              <div class="button-row">
+                <button class="btn-pass" id="passBtn">採用！</button>
+                <button class="btn-fail" id="failBtn">不採用</button>
+                <button class="btn-next hidden" id="nextBtn">次の問題へ</button>
+              </div>
+
+              <div class="result-box hidden" id="resultBox"></div>
+            </div>
+          </section>
+
+          <section id="summaryCard" class="summary-box hidden">
+            <h2 class="section-title">結果</h2>
+            <div class="summary-score" id="scoreText"></div>
+            <div class="summary-message" id="summaryMessage"></div>
+            <div style="margin-top: 18px;">
+              <button class="btn-restart" id="restartBtn">最初からやり直す</button>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <aside class="side-stack">
+        <section class="panel">
+          <div class="panel-body">
+            <h2 class="section-title">現在の状況</h2>
+            <p class="sub-text">
+              問題を解きながら、判定精度を確認できます。
+            </p>
+
+            <div class="mini-stat-grid">
+              <div class="mini-stat">
+                <div class="mini-stat-label">現在のスコア</div>
+                <div class="mini-stat-value" id="liveScore">0</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-label">残り問題数</div>
+                <div class="mini-stat-value" id="remainCount">0</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-body tips-box">
+            <h2 class="section-title">見るポイント</h2>
+            <ul class="tips-list">
+              <li>志望理由が会社理解とつながっているか</li>
+              <li>成果の説明に具体性と再現性があるか</li>
+              <li>他責ではなく、自分の工夫を語れているか</li>
+              <li>弱みを認識し、改善行動まで語れているか</li>
+              <li>組織で働くうえでの対人姿勢が安定しているか</li>
+            </ul>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        category: "志望動機",
+        difficulty: "基本",
+        question: "なぜ当社を志望したのですか？",
+        answer: "正直に言うと、現職に大きな不満があるわけではありません。ただ、年収を少し上げたい気持ちと、知名度のある会社で働いてみたいという気持ちがあります。御社の事業内容はこれから調べようと思っています。",
+        correct: "fail",
+        explanation: "本音が出ている点は悪くありませんが、企業理解と志望理由がかなり弱い回答です。現時点で前向き評価はしづらく、不採用寄りで見るのが妥当です。",
+        insight: "『知名度』『年収』だけでは弱いです。転職理由と応募企業の接続があるかを見ます。"
+      },
+      {
+        category: "再現性",
+        difficulty: "基本",
+        question: "これまでの成功体験を、当社でどう再現できますか？",
+        answer: "前職では営業として成果を出しました。とにかく誰よりも足で稼いで、気合いでやり切りました。御社でも根性で何とかします。数字は細かく覚えていません。",
+        correct: "fail",
+        explanation: "熱意は見えますが、再現性の説明が弱く、成果の根拠も曖昧です。『何をやったか』『なぜ成果が出たか』が見えにくいため、不採用寄りの判断が妥当です。",
+        insight: "精神論だけでなく、行動・工夫・成果の因果が語れているかが重要です。"
+      },
+      {
+        category: "課題解決",
+        difficulty: "標準",
+        question: "難しい調整案件をどう乗り越えたか教えてください。",
+        answer: "関係者の要望が食い違っていたので、まず相手ごとの優先順位を整理しました。その上で、全員が絶対に譲れない点と、調整可能な点を切り分けて、3案ほど持って相談しました。結果として納期を守ったまま合意形成できました。",
+        correct: "pass",
+        explanation: "構造化して状況を捉え、調整プロセスも具体的です。再現性があり、仕事の進め方も見えるので、採用寄りに判断しやすい回答です。",
+        insight: "単なる『頑張った』ではなく、整理→提案→合意形成という流れが見えるのが強いです。"
+      },
+      {
+        category: "価値観",
+        difficulty: "標準",
+        question: "苦手な上司や同僚がいた場合、どう対応しますか？",
+        answer: "相手にも事情があると思うので、まずは期待値のズレを確認します。その上で、自分の受け取り方に問題がないかも見直します。どうしても業務に支障が出る場合は、感情論ではなく事実ベースで相談します。",
+        correct: "pass",
+        explanation: "対人関係を感情的に処理せず、事実と期待値の調整で捉えている点が良いです。組織適応力のある回答として、採用寄りで見やすいです。",
+        insight: "他責一辺倒ではないか、対立時に建設的に動けるかを見ます。"
+      },
+      {
+        category: "成長意欲",
+        difficulty: "やや難",
+        question: "最近、自主的に学んだことを教えてください。",
+        answer: "特に勉強はしていません。仕事が忙しかったので。ただ、必要になったらその時に覚えればいいと思っています。今のところ大きな問題は起きていません。",
+        correct: "fail",
+        explanation: "率直さはありますが、変化対応力や学習意欲が弱く見えます。職種によっては即NGではないものの、基本的には不採用寄り評価が妥当です。",
+        insight: "学習の有無だけでなく、『必要時にどう学ぶか』の姿勢も見ます。"
+      },
+      {
+        category: "自己認識",
+        difficulty: "やや難",
+        question: "あなたの弱みを教えてください。",
+        answer: "私は細かいところまで抱え込みやすい弱みがあります。以前は自分で持ちすぎて遅れたことがあったので、今は着手時点で関係者を巻き込み、締切の中間確認を入れるようにしています。",
+        correct: "pass",
+        explanation: "弱みを言うだけでなく、改善行動まで説明できています。自己認識と修正力が見えるため、採用寄りに判断しやすいです。",
+        insight: "『弱みの開示』より、『どうコントロールしているか』が重要です。"
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let answered = false;
+    let gameQuestions = [];
+
+    const startBtn = document.getElementById("startBtn");
+    const passBtn = document.getElementById("passBtn");
+    const failBtn = document.getElementById("failBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    const gameCard = document.getElementById("gameCard");
+    const summaryCard = document.getElementById("summaryCard");
+
+    const categoryPill = document.getElementById("categoryPill");
+    const difficultyPill = document.getElementById("difficultyPill");
+    const questionText = document.getElementById("questionText");
+    const answerText = document.getElementById("answerText");
+    const resultBox = document.getElementById("resultBox");
+
+    const progressText = document.getElementById("progressText");
+    const progressCount = document.getElementById("progressCount");
+    const progressFill = document.getElementById("progressFill");
+
+    const liveScore = document.getElementById("liveScore");
+    const remainCount = document.getElementById("remainCount");
+
+    const scoreText = document.getElementById("scoreText");
+    const summaryMessage = document.getElementById("summaryMessage");
+
+    function shuffle(array) {
+      const copied = [...array];
+      for (let i = copied.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copied[i], copied[j]] = [copied[j], copied[i]];
+      }
+      return copied;
+    }
+
+    function updateSideStats() {
+      liveScore.textContent = score;
+      remainCount.textContent = gameQuestions.length - currentIndex;
+    }
+
+    function updateProgress() {
+      const total = gameQuestions.length;
+      const current = currentIndex + 1;
+      const percent = total ? Math.round((currentIndex / total) * 100) : 0;
+
+      progressText.textContent = answered
+        ? "判定完了"
+        : "候補者の回答を読んで判定してください";
+      progressCount.textContent = `${Math.min(current, total)} / ${total}`;
+      progressFill.style.width = `${percent}%`;
+    }
+
+    function loadQuestion() {
+      const q = gameQuestions[currentIndex];
+      answered = false;
+
+      categoryPill.textContent = `カテゴリ：${q.category}`;
+      difficultyPill.textContent = `難易度：${q.difficulty}`;
+      questionText.textContent = q.question;
+      answerText.textContent = q.answer;
+
+      resultBox.className = "result-box hidden";
+      resultBox.innerHTML = "";
+
+      nextBtn.classList.add("hidden");
+      passBtn.disabled = false;
+      failBtn.disabled = false;
+
+      updateProgress();
+      updateSideStats();
+    }
+
+    function judge(choice) {
+      if (answered) return;
+
+      answered = true;
+      const q = gameQuestions[currentIndex];
+      const isCorrect = choice === q.correct;
+
+      if (isCorrect) {
+        score++;
+      }
+
+      resultBox.className = `result-box ${isCorrect ? "result-correct" : "result-incorrect"}`;
+      resultBox.innerHTML = `
+        <div class="result-title">${isCorrect ? "正解！" : "不正解"}</div>
+        <div><span class="result-strong">正しい判断：</span>${q.correct === "pass" ? "採用！" : "不採用"}</div>
+        <div style="margin-top:8px;"><span class="result-strong">解説：</span>${q.explanation}</div>
+        <div style="margin-top:8px;"><span class="result-strong">見るポイント：</span>${q.insight}</div>
+      `;
+
+      resultBox.classList.remove("hidden");
+      nextBtn.classList.remove("hidden");
+      passBtn.disabled = true;
+      failBtn.disabled = true;
+
+      updateProgress();
+      updateSideStats();
+
+      if (currentIndex === gameQuestions.length - 1) {
+        nextBtn.textContent = "結果を見る";
+      }
+    }
+
+    function showSummary() {
+      gameCard.classList.add("hidden");
+      summaryCard.classList.remove("hidden");
+
+      const total = gameQuestions.length;
+      const percent = Math.round((score / total) * 100);
+
+      scoreText.textContent = `${score} / ${total}　（正答率 ${percent}%）`;
+
+      let message = "回答の表面だけでなく、具体性・再現性・自己認識まで見られています。かなり良いです。";
+      if (percent < 50) {
+        message = "第一印象で判断しすぎているかもしれません。『具体性』『再現性』『他責でないか』を意識すると精度が上がります。";
+      } else if (percent < 80) {
+        message = "基本は押さえられています。次は『熱意はあるが弱い回答』と『地味だが強い回答』を見分ける練習をするとさらに良くなります。";
+      }
+
+      summaryMessage.textContent = message;
+      progressText.textContent = "トレーニング完了";
+      progressCount.textContent = `${total} / ${total}`;
+      progressFill.style.width = "100%";
+      liveScore.textContent = score;
+      remainCount.textContent = 0;
+    }
+
+    function startGame() {
+      gameQuestions = shuffle(questions);
+      currentIndex = 0;
+      score = 0;
+      answered = false;
+
+      summaryCard.classList.add("hidden");
+      gameCard.classList.remove("hidden");
+      nextBtn.textContent = "次の問題へ";
+
+      loadQuestion();
+    }
+
+    startBtn.addEventListener("click", startGame);
+    restartBtn.addEventListener("click", startGame);
+
+    passBtn.addEventListener("click", () => judge("pass"));
+    failBtn.addEventListener("click", () => judge("fail"));
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < gameQuestions.length - 1) {
+        currentIndex++;
+        loadQuestion();
+      } else {
+        showSummary();
+      }
+    });
+
+    progressText.textContent = "ゲーム開始でスタート";
+    progressCount.textContent = `0 / ${questions.length}`;
+    remainCount.textContent = questions.length;
+  </script>
+</body>
+</html>
